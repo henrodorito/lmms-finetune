@@ -8,6 +8,7 @@ python3 video_frame_sampler.py
 import cv2
 import os
 import json
+import base64
 from tqdm import tqdm
 import shutil
 
@@ -78,24 +79,30 @@ for file_name in tqdm(video_files, desc="Processing Videos"):
                     break
         
         if len(image_files) == frames_to_sample:
-            # Only add JSON object to the group if it's complete
-            json_object = {
-                "system_prompt": "Assistant predicts the next image in the image sequence.",
-                "image": image_files,
-                "conversations": [
-                    {
-                        "from": "human",
-                        "value": "Help me generate the next image in this logical sequence of images.<image><image><image><image>"
-                    },
-                    {
-                        "from": "gpt",
-                        "value": "Here is the next image. <image>"
-                    }
-                ]
-            }
+            next_image_file_path = os.path.join(output_folder, image_files[frames_to_sample - 1])
+            next_image = cv2.imread(next_image_file_path)
+            _, buffer = cv2.imencode('.jpg', next_image) # Convert the image to a byte array
+            next_image_base64 = base64.b64encode(buffer).decode('utf-8') # Encode the byte array to base64
+            
+            # Only add JSON object to the group if it's complete and not in our eval
+            if not (frame_batch == 0439 or frame_batch == 0329):
+                json_object = {
+                    "system_prompt": "Assistant predicts the next image in the image sequence.",
+                    "image": image_files[:frames_to_sample - 1],
+                    "conversations": [
+                        {
+                            "from": "human",
+                            "value": "Help me generate the next image in this logical sequence of images.<image><image><image><image>"
+                        },
+                        {
+                            "from": "gpt",
+                            "value": f"Here is the next image in base64: {next_image_base64}"
+                        }
+                    ]
+                }
 
-            # Add the JSON object to the list
-            json_list.append(json_object)
+                # Add the JSON object to the list
+                json_list.append(json_object)
             
             frame_batch += 1
             group_number += 1

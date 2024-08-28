@@ -22,5 +22,6 @@ not_useful_for_now
 
 example_data/videos/ego4d/*.mp4
 example_data/frames/*.jpg
+example_data/frames_train.json
 
 test_venv
