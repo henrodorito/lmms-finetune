@@ -85,7 +85,7 @@ for file_name in tqdm(video_files, desc="Processing Videos"):
             next_image_base64 = base64.b64encode(buffer).decode('utf-8') # Encode the byte array to base64
             
             # Only add JSON object to the group if it's complete and not in our eval
-            if not (frame_batch == 0439 or frame_batch == 0329):
+            if not (frame_batch == 439 or frame_batch == 329):
                 json_object = {
                     "system_prompt": "Assistant predicts the next image in the image sequence.",
                     "image": image_files[:frames_to_sample - 1],
