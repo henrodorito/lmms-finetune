@@ -1,0 +1,30 @@
+[
+    {
+        "system_prompt": "Assistant predicts the next image in the image sequence.",
+        "image": ["0000-1.jpg", "0000-2.jpg", "0000-3.jpg", "0000-4.jpg", "0000-5.jpg"],
+        "conversations": [
+            {
+                "from": "human",
+                "value": "Help me generate the next image in this logical sequence of images.<image><image><image><image>"
+            },
+            {
+                "from": "gpt",
+                "value": "Here is the next iamge. <image>"
+            }
+        ]
+    },
+    {
+        "system_prompt": "Assistant predicts the next image in the image sequence.",
+        "image": ["0001-1.jpg", "0001-2.jpg", "0001-3.jpg", "0001-4.jpg", "0001-5.jpg"],
+        "conversations": [
+            {
+                "from": "human",
+                "value": "Help me generate the next image in this logical sequence of images.<image><image><image><image>"
+            },
+            {
+                "from": "gpt",
+                "value": "Here is the next image. <image>"
+            }
+        ]
+    }
+]
