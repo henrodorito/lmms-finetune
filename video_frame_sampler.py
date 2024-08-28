@@ -1,4 +1,4 @@
-''' bash script to run the code
+''' bash script to run the code (testing for henrodorito)
 pip install opencv-python
 pip install tqdm
 python3 video_frame_sampler.py
